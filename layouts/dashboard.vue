@@ -38,7 +38,7 @@ export default {
     return {
       items: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', path: '/dashboard' },
-        { title: 'Empleados', icon: 'mdi-account-group', path: '/dashboard/empleados' },
+        { title: 'Empleados', icon: 'mdi-account-group', path: '/dashboard' },
         { title: 'Products', icon: 'mdi-cube' },
         { title: 'Orders', icon: 'mdi-cart' },
         { title: 'Settings', icon: 'mdi-cog' }
