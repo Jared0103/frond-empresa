@@ -1,10 +1,14 @@
 {
   "routes": [],
+  "cors": {
+    "allowedOrigins": ["*"],
+    "allowedMethods": ["GET", "POST", "PUT", "DELETE"]
+  },
   "platformErrorOverrides": [
     {
       "errorType": "NotFound",
-      "serve": "/200.html",
-      "statusCode": 200
+      "serve": "/404.html",
+      "statusCode": 404
     }
   ]
 }

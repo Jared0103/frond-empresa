@@ -19,7 +19,11 @@ export default {
     ]
   },
 
-  target: './static/routes.json',
+  generate: {
+    dir: 'dist'
+  },
+
+  target: 'static',
   server: {
     port: process.env.PORT,
     host: '0.0.0.0'
