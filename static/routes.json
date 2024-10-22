@@ -1,9 +1,4 @@
 {
-  "routes": [],
-  "cors": {
-    "allowedOrigins": ["*"],
-    "allowedMethods": ["GET", "POST", "PUT", "DELETE"]
-  },
   "platformErrorOverrides": [
     {
       "errorType": "NotFound",
