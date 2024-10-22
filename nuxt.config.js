@@ -19,10 +19,6 @@ export default {
     ]
   },
 
-  generate: {
-    dir: 'dist'
-  },
-
   target: 'static',
   server: {
     port: process.env.PORT,
