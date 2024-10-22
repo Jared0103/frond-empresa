@@ -18,6 +18,10 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7f751085ee3cd93485e0e83c5eb642350ecad002
   target: 'static',
   server: {
     port: process.env.PORT,
