@@ -205,36 +205,46 @@ export default {
       this.$router.push('/')
     },
     async registrarUsuario () {
-      if (this.form.password === this.form.confirmarPassword) {
-        const formData = new FormData()
+      // Verificar que el campo de usuario (o cualquier otro campo obligatorio) no esté vacío
+      if (!this.form.usuario || !this.form.password || !this.form.confirmarPassword) {
+        console.error('Debe llenar todos los campos obligatorios')
+        alert('Por favor, llene todos los campos obligatorios.')
+        return // Detener la ejecución si algún campo obligatorio está vacío
+      }
 
-        // Recorrer los campos del formulario
-        for (const key in this.form) {
-          if (key === 'imagen') {
-            if (this.form.imagen) { // Cambiar a this.form.imagen
-              formData.append('imagen', this.form.imagen) // Subir imagen
-            } else {
-              console.warn('No se ha seleccionado ninguna imagen')
-            }
-          } else {
-            formData.append(key, this.form[key]) // Agregar otros campos
-          }
-        }
-
-        try {
-          const response = await this.$axios.post('/empleados/create', formData)
-          console.log('🚀 ~ registrarUsuario ~ response:', response)
-
-          // Verificar el estado de la respuesta
-          if (response.data.succes) {
-            this.form = {} // Limpiar el formulario
-            this.$router.push('/') // Redireccionar
-          }
-        } catch (error) {
-          console.error('Error al registrar usuario:', error)
-        }
-      } else {
+      // Verificar que las contraseñas coincidan
+      if (this.form.password !== this.form.confirmarPassword) {
         console.error('Las contraseñas no coinciden')
+        alert('Las contraseñas no coinciden')
+        return // Detener la ejecución si las contraseñas no coinciden
+      }
+
+      const formData = new FormData()
+
+      // Recorrer los campos del formulario
+      for (const key in this.form) {
+        if (key === 'imagen') {
+          if (this.form.imagen) {
+            formData.append('imagen', this.form.imagen) // Subir imagen
+          } else {
+            console.warn('No se ha seleccionado ninguna imagen')
+          }
+        } else {
+          formData.append(key, this.form[key]) // Agregar otros campos
+        }
+      }
+
+      try {
+        const response = await this.$axios.post('/empleados/create', formData)
+        console.log('🚀 ~ registrarUsuario ~ response:', response)
+
+        // Verificar el estado de la respuesta
+        if (response.data.success) {
+          this.form = {} // Limpiar el formulario
+          this.$router.push('/') // Redireccionar
+        }
+      } catch (error) {
+        console.error('Error al registrar usuario:', error)
       }
     }
 
