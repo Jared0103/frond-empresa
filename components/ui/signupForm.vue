@@ -184,18 +184,6 @@ export default {
     return {
       form: {
         id: null,
-        nombre: '',
-        apaterno: '',
-        amaterno: '',
-        correo: '',
-        direccion: '',
-        telefono: '',
-        ciudad: '',
-        estado: '',
-        usuario: '',
-        password: '',
-        confirmarPassword: '',
-        rol: '',
         imagen: null
       }
     }
