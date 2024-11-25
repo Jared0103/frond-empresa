@@ -1,9 +1,10 @@
 <template>
   <v-app>
+    <show-alert v-if="showAlert" class="show-alert" />
     <v-main>
       <Nuxt />
     </v-main>
-    <v-navigation-drawer permanent absolute right>
+    <v-navigation-drawer permanent absolute right app>
       <template #prepend>
         <v-list-item two-line>
           <v-list-item-avatar>
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -44,8 +46,27 @@ export default {
         { title: 'Settings', icon: 'mdi-cog' }
       ]
     }
+  },
+  computed: {
+    ...mapState({
+      showAlert: state => state.ShowAlert
+    })
+  },
+  watch: {
+    showAlert () {
+      console.log('🚀 ~ showAlert ~ showAlert:', this.showAlert)
+    }
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.show-alert {
+  position: fixed;
+  left: 10px;
+  z-index: 100;
+  top: 10px;
+  min-width: 350px;
+}
+
+</style>

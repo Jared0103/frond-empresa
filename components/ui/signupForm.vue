@@ -166,7 +166,7 @@
                   @click="registrarUsuario"
                 >
                   <span style="text-transform: none; color: #FFFFFF">
-                    Registrarse
+                    {{ inside && update ? 'Actualizar' : inside && !update ? 'Crear Nuevo' : 'Registrar' }}
                   </span>
                 </v-btn>
               </v-col>
@@ -180,6 +180,20 @@
 
 <script>
 export default {
+  props: {
+    inside: {
+      type: Boolean,
+      default: false
+    },
+    update: {
+      type: Boolean,
+      default: false
+    },
+    empleadoUpdate: {
+      type: Object,
+      default: null
+    }
+  },
   data () {
     return {
       form: {
@@ -188,9 +202,20 @@ export default {
       }
     }
   },
+  mounted () {
+    console.log('🚀 ~ mounted ~ this.update:', this.update, this.empleadoUpdate)
+    if (this.update && this.empleadoUpdate) {
+      this.form = this.empleadoUpdate
+      this.form.password = ''
+    }
+  },
   methods: {
     gotoLogin () {
-      this.$router.push('/')
+      if (this.inside) {
+        this.$emit('click-cancel')
+      } else {
+        this.$router.push('/')
+      }
     },
     async registrarUsuario () {
       // Verificar que el campo de usuario (o cualquier otro campo obligatorio) no esté vacío
@@ -221,18 +246,32 @@ export default {
           formData.append(key, this.form[key]) // Agregar otros campos
         }
       }
-
       try {
-        const response = await this.$axios.post('/empleados/create', formData)
+        // Verificar si se trata de una actualización o una creación
+        let response
+        if (this.update) {
+          response = await this.$axios.put(`/empleados/update/${this.form.id}`, formData)
+        } else {
+          response = await this.$axios.post('/empleados/create', formData)
+        }
+
         console.log('🚀 ~ registrarUsuario ~ response:', response)
 
         // Verificar el estado de la respuesta
         if (response.data.success) {
+          this.usuario = {}
           this.form = {} // Limpiar el formulario
-          this.$router.push('/') // Redireccionar
+
+          if (this.inside) {
+            this.$emit('guardado') // Emitir el evento si está dentro
+          } else {
+            this.$router.push('/') // Redirigir si no está dentro
+          }
         }
       } catch (error) {
-        console.error('Error al registrar usuario:', error)
+        console.error('Error al registrar el usuario:', error)
+        // Aquí podrías agregar un mensaje de error para el usuario, por ejemplo:
+        this.$toast.error('Error al registrar el usuario')
       }
     }
 

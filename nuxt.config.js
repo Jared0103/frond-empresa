@@ -29,6 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/ui.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -69,12 +70,13 @@ export default {
         },
         endpoints: {
           login: { url: '/auth/login', method: 'post' },
-          logout: { url: '/auth/logout', method: 'post' }
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/user', method: 'get' }
         }
       }
     },
     redirect: {
-      login: '/login',
+      login: '/',
       logout: '/',
       home: '/dashboard'
     }

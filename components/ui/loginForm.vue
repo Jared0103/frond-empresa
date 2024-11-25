@@ -91,11 +91,24 @@ export default {
         const response = await this.$auth.loginWith('local', {
           data: this.form
         })
+
         console.log('🚀 ~ login ~ response:', response)
+
+        if (response && response.data && response.data.token) {
+          // Almacenar el token manualmente si es necesario
+          this.$auth.setUserToken(response.data.token)
+
+          // Verificar el estado después de establecer el token
+          console.log('Is user logged in?', this.$auth.loggedIn) // Esto debería ser true ahora
+
+          // Redirigir
+          this.$router.push('/dashboard')
+        }
       } catch (error) {
-        this.errorMessage = error
+        this.errorMessage = error.message
       }
     },
+
     gotoSignup () {
       this.$router.push('/signup')
     }
